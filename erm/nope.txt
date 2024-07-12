@@ -1,0 +1,17 @@
+// Send message to Discord webhook
+                        fetch(webhookUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ content: message })
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                console.error('Error sending webhook:', response.statusText);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Fetch error:', error);
+                        });
+                        

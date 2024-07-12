@@ -28,6 +28,7 @@
 
     <script>
         const ws = new WebSocket('wss://pxls.space/ws');
+        const webhookUrl = 'https://discord.com/api/webhooks/1261391424050696374/NUv9batnKcnyd5wZcO1Ww7ThcoRSrMgzs6R4nHheQelP5D-uGPKVuKQx2lI8eEHdq1L0';
 
         ws.onopen = function(event) {
             document.getElementById('data').innerText = 'Connected to WebSocket';
@@ -36,7 +37,13 @@
         ws.onmessage = function(event) {
             try {
                 const jsonData = JSON.parse(event.data);
-                document.getElementById('data').innerText = JSON.stringify(jsonData, null, 2);
+                if (jsonData.type === 'pixel') {
+                    const pixelInfo = jsonData.pixels.map(pixel => {
+                        const message = `A pixel has been placed on ${pixel.x}, ${pixel.y} with color ${pixel.color}!`;
+                        return `${message}\nThis information is completely useless.`;
+                    }).join('\n\n');
+                    document.getElementById('data').innerText = pixelInfo;
+                }
             } catch (e) {
                 console.error('Error parsing JSON:', e);
             }
