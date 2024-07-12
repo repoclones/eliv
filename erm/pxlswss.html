@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pxls - wss</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #303030;
+            margin: 0;
+        }
+        #data {
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="data">shikanoko nokonoko koshitantan</div>
+
+    <script>
+        const ws = new WebSocket('wss://pxls.space/ws');
+
+        ws.onopen = function(event) {
+            document.getElementById('data').innerText = 'Connected to WebSocket';
+        };
+
+        ws.onmessage = function(event) {
+            try {
+                const jsonData = JSON.parse(event.data);
+                document.getElementById('data').innerText = JSON.stringify(jsonData, null, 2);
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+            }
+        };
+
+        ws.onerror = function(error) {
+            document.getElementById('data').innerText = 'WebSocket Error: ' + error;
+        };
+
+        ws.onclose = function(event) {
+            document.getElementById('data').innerText = 'WebSocket Connection Closed';
+        };
+    </script>
+</body>
+</html>
