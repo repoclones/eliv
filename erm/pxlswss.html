@@ -28,8 +28,7 @@
 
     <script>
         const ws = new WebSocket('wss://pxls.space/ws');
-        const webhookUrl = 'https://discord.com/api/webhooks/1261391424050696374/NUv9batnKcnyd5wZcO1Ww7ThcoRSrMgzs6R4nHheQelP5D-uGPKVuKQx2lI8eEHdq1L0';
-
+        
         ws.onopen = function(event) {
             document.getElementById('data').innerText = 'Connected to WebSocket';
         };
